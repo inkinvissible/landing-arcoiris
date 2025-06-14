@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -6,6 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button'; // Asegúrate que esta ruta sea correcta
 import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
 
 const navLinks = [
     { href: '/', label: 'Inicio' },
@@ -62,7 +62,7 @@ export default function Header() {
         : 'text-white hover:text-gray-300';
 
     // Clases dinámicas para el botón de contacto
-    const contactButtonVariant = isScrolled ? 'default' : 'outline';
+    const contactButtonVariant = isScrolled ? 'default' : 'glass';
     const contactButtonClasses = isScrolled
         ? 'transition-colors duration-300'
         : 'border-white text-white hover:bg-white hover:text-black dark:hover:bg-white/10 dark:hover:text-white transition-colors duration-300';
@@ -89,7 +89,14 @@ export default function Header() {
                     {/* Logo */}
                     <div>
                         <Link href="/" className={`text-2xl font-bold transition-colors duration-300 ${logoTextClass}`}>
-                            TuLogo
+                            <Image
+                                src="/images/logo-principal.png"
+                                alt="Logo de Arcoiris Viajes"
+                                width={220}
+                                height={58}
+                                quality={100}
+                            >
+                            </Image>
                         </Link>
                     </div>
 
@@ -99,7 +106,7 @@ export default function Header() {
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className={`text-sm font-medium transition-colors duration-300 ${navLinkTextClass}`}
+                                className={`font-medium transition-colors duration-300 ${navLinkTextClass}`}
                             >
                                 {link.label}
                             </Link>
