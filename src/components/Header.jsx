@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button'; // Asegúrate que esta ruta sea correcta
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 import Image from 'next/image';
 
 const navLinks = [
@@ -66,11 +66,11 @@ export default function Header() {
     const contactButtonClasses = isScrolled
         ? 'transition-colors duration-300'
         : 'border-white text-white hover:bg-white hover:text-black dark:hover:bg-white/10 dark:hover:text-white transition-colors duration-300';
-
+    const logoVariant = isScrolled ? "/images/logo-principal.png" : '/images/logo-blanco.png';
 
     return (
         <>
-            <style jsx global>{`
+            <style>{`
         :root {
           --header-bg-color: rgba(255, 255, 255, 1);
         }
@@ -90,7 +90,7 @@ export default function Header() {
                     <div>
                         <Link href="/" className={`text-2xl font-bold transition-colors duration-300 ${logoTextClass}`}>
                             <Image
-                                src="/images/logo-principal.png"
+                                src={logoVariant}
                                 alt="Logo de Arcoiris Viajes"
                                 width={220}
                                 height={58}
@@ -119,7 +119,7 @@ export default function Header() {
                             variant={contactButtonVariant}
                             className={contactButtonClasses}
                         >
-                            Contacto
+                            <Phone />  Contacto
                         </Button>
                     </div>
 
