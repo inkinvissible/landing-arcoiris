@@ -26,9 +26,8 @@ export default function Card({ imageUrl, title, description, altText }) {
                         <Image
                             src={imageUrl}
                             alt={altText || title}
-                            layout="fill"
-                            objectFit="cover"
-                            className="transition-all duration-700 ease-in-out"
+                            fill
+                            className="transition-all duration-700 ease-in-out object-cover"
                         />
                     </motion.div>
 

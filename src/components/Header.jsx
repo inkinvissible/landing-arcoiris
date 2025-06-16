@@ -6,19 +6,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button'; // Asegúrate que esta ruta sea correcta
 import { Menu, X, Phone } from 'lucide-react';
 import Image from 'next/image';
+import useSmoothScroll from "@/hooks/useSmoothScroll";
 
 const navLinks = [
     { href: '/', label: 'Inicio' },
-    { href: '/destino', label: 'Destino' },
-    { href: '/galeria', label: 'Galería' },
-    { href: '/sobre-nosotros', label: 'Sobre Nosotros' },
-    { href: '/novedades', label: 'Novedades' },
-    { href: '/ofertas', label: 'Ofertas' },
+    { href: '#destino', label: 'Destino' },
+    { href: '#galeria', label: 'Galería' },
+    { href: '#sobre-nosotros', label: 'Sobre Nosotros' },
+    { href: '#novedades', label: 'Novedades' },
+    { href: '#ofertas', label: 'Ofertas' },
 ];
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { scrollToElement } = useSmoothScroll();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -107,6 +109,7 @@ export default function Header() {
                                 key={link.href}
                                 href={link.href}
                                 className={`font-medium transition-colors duration-300 ${navLinkTextClass}`}
+                                onClick={(e) => scrollToElement(e, link.href)}
                             >
                                 {link.label}
                             </Link>
@@ -153,7 +156,10 @@ export default function Header() {
                                     key={link.href}
                                     href={link.href}
                                     className="text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white py-2 text-sm font-medium"
-                                    onClick={() => setIsMobileMenuOpen(false)} // Cierra el menú al hacer clic
+                                    onClick={(e) => {
+                                        scrollToElement(e, link.href);
+                                        setIsMobileMenuOpen(false);
+                                    }}
                                 >
                                     {link.label}
                                 </Link>

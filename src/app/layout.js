@@ -13,9 +13,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Arcoiris Viajes - Tus sueños hechos realidad",
-  description: "Explora destinos increíbles, ofertas exclusivas y planifica el viaje de tus sueños con nosotros.",
+    title: "Arcoiris Viajes - Tus sueños hechos realidad",
+    description: "Explora destinos increíbles, ofertas exclusivas y planifica el viaje de tus sueños con nosotros.",
+    icons: {
+        icon: "/favicon.ico", // o PNG si preferís
+        shortcut: "/favicon.ico",
+        apple: "/apple-touch-icon.png", // 180x180
+    },
+    manifest: '/site.webmanifest',
 };
+
 
 export default function RootLayout({ children }) {
   return (

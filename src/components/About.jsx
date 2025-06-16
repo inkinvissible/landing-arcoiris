@@ -125,9 +125,8 @@ export default function About() {
                             <Image
                                 src="/images/sobre-nosotros.png"
                                 alt="Nuestra Empresa"
-                                layout="fill"
-                                objectFit="cover"
-                                className="bg-white dark:bg-gray-800"
+                                fill
+                                className="bg-white dark:bg-gray-800 object-cover"
                             />
                         </div>
 

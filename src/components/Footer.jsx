@@ -3,8 +3,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Instagram, Facebook, Twitter, MapPin, Phone, Mail, ChevronRight } from 'lucide-react';
+import useSmoothScroll from "@/hooks/useSmoothScroll";
 
 export default function Footer() {
+    const { scrollToElement } = useSmoothScroll();
+
     const footerVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -54,20 +57,6 @@ export default function Footer() {
                         </div>
                     </motion.div>
 
-                    {/* Enlaces rápidos */}
-                    <motion.div variants={itemVariants}>
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-5">Enlaces rápidos</h3>
-                        <ul className="space-y-3">
-                            {['Destinos', 'Ofertas', 'Sobre nosotros', 'Novedades', 'Galería'].map((item, index) => (
-                                <li key={index}>
-                                    <Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-[#6645AF] dark:hover:text-[#9370DB] transition-colors duration-200 flex items-center">
-                                        <ChevronRight size={16} className="mr-2" />
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
 
                     {/* Destinos populares */}
                     <motion.div variants={itemVariants}>
