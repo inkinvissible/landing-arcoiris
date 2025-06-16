@@ -8,9 +8,14 @@ import {novedades} from "@/utils/novedades-utils";
 import About from "@/components/About";
 import Gallery from "@/components/Gallery";
 import Footer from "@/components/Footer";
-import Globe from "@/components/Globe";
+import {client} from "@/lib/sanity";
+import {novedadesQuery} from "@/lib/queries";
+import {mapSanityNovedades} from "@/utils/transformNovedades";
 
-export default function Home() {
+
+export default async function Home() {
+    const rawNovedades = await client.fetch(novedadesQuery);
+    const novedadesData = mapSanityNovedades(rawNovedades);
     return (
         <>
             <Hero/>
@@ -36,7 +41,7 @@ export default function Home() {
                 <ScrollableCardSection
                     sectionTitle="Nuestras novedades"
                     sectionSubtitle="Descubre las últimas noticias y actualizaciones de nuestros destinos."
-                    cardsData={novedades}
+                    cardsData={novedadesData}
                     cardsToShow={4}
                     buttonText={"Quiero consultar"}
                 />
