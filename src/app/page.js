@@ -4,13 +4,13 @@ import {recommendedDestinations} from "@/utils/destinations-utils";
 import FeaturedArticlesSection from "@/components/FeaturedArticlesSection";
 import {mainStory, sideStories} from "@/utils/ofertas-utils";
 import Callout from "@/components/Callout";
-import {novedades} from "@/utils/novedades-utils";
 import About from "@/components/About";
 import Gallery from "@/components/Gallery";
 import Footer from "@/components/Footer";
 import {client} from "@/lib/sanity";
 import {novedadesQuery} from "@/lib/queries";
 import {mapSanityNovedades} from "@/utils/transformNovedades";
+
 
 
 export default async function Home() {
