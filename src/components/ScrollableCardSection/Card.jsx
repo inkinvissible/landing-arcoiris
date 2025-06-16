@@ -27,6 +27,7 @@ export default function Card({ imageUrl, title, description, altText }) {
                             src={imageUrl}
                             alt={altText || title}
                             fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className="transition-all duration-700 ease-in-out object-cover"
                         />
                     </motion.div>

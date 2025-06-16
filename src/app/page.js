@@ -8,6 +8,7 @@ import {novedades} from "@/utils/novedades-utils";
 import About from "@/components/About";
 import Gallery from "@/components/Gallery";
 import Footer from "@/components/Footer";
+import Globe from "@/components/Globe";
 
 export default function Home() {
     return (

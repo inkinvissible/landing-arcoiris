@@ -94,11 +94,14 @@ export default function Header() {
                             <Image
                                 src={logoVariant}
                                 alt="Logo de Arcoiris Viajes"
-                                width={220}
-                                height={58}
-                                quality={100}
-                            >
-                            </Image>
+                                width={190}
+                                height={60}
+                                quality={80}
+                                priority={true}
+                                className="h-auto w-auto"
+
+                            />
+
                         </Link>
                     </div>
 
@@ -147,7 +150,7 @@ export default function Header() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.2, ease: 'easeInOut' }}
-                        className="fixed top-[60px] left-0 right-0 z-40 md:hidden bg-white dark:bg-gray-900 shadow-lg p-4"
+                        className="fixed top-[70px] left-0 right-0 z-40 md:hidden bg-white dark:bg-gray-900 shadow-lg p-4"
                         // Ajusta top-[60px] según la altura de tu header
                     >
                         <nav className="flex flex-col space-y-3">

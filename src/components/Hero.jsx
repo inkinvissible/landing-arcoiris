@@ -18,49 +18,51 @@ const heroImageUrls = [
 
 export default function Hero() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [isLoadingImage, setIsLoadingImage] = useState(true);
+    const [isLoading, setIsLoading] = useState(true); // Un único estado de carga para la imagen inicial
     const { scrollToElement } = useSmoothScroll();
 
-    // Cambio automático de imagen cada 8 segundos
+    // Efecto para el cambio automático de imágenes
     useEffect(() => {
-        // Establecer una imagen inicial aleatoria la primera vez
         const randomIndex = Math.floor(Math.random() * heroImageUrls.length);
         setCurrentImageIndex(randomIndex);
 
-        // Intervalo para el cambio de imágenes
         const interval = setInterval(() => {
             setCurrentImageIndex(prevIndex => (prevIndex + 1) % heroImageUrls.length);
-        }, 8000); // Cambia cada 8 segundos
+        }, 8000);
 
         return () => clearInterval(interval);
     }, []);
 
+    // --- ¡NUEVO! Efecto para precargar la siguiente imagen ---
+    useEffect(() => {
+        if (heroImageUrls.length > 1) {
+            const nextIndex = (currentImageIndex + 1) % heroImageUrls.length;
+            const nextImageUrl = heroImageUrls[nextIndex];
+
+            // Se crea una instancia de Image en memoria para forzar la descarga
+            const img = new window.Image();
+            img.src = nextImageUrl;
+        }
+    }, [currentImageIndex]); // Se ejecuta cada vez que la imagen actual cambia
+
     const handleImageLoad = () => {
-        setIsLoadingImage(false);
+        setIsLoading(false);
     };
 
-    // Variantes de animación para las imágenes de fondo
     const imageVariants = {
         initial: { opacity: 0, scale: 1.05 },
         animate: {
             opacity: 1,
             scale: 1,
-            transition: {
-                duration: 2, // Duración de la transición de entrada
-                ease: [0.42, 0, 0.58, 1],
-            },
+            transition: { duration: 2, ease: [0.42, 0, 0.58, 1] },
         },
         exit: {
             opacity: 0,
             scale: 1.05,
-            transition: {
-                duration: 2, // Duración de la transición de salida
-                ease: [0.42, 0, 0.58, 1],
-            },
+            transition: { duration: 2, ease: [0.42, 0, 0.58, 1] },
         },
     };
 
-    // Variantes para el resto de los elementos del Hero
     const fadeInUp = {
         hidden: { opacity: 0, y: 60 },
         visible: (custom) => ({
@@ -76,15 +78,13 @@ export default function Hero() {
 
     return (
         <section className="relative flex min-h-screen items-center justify-center overflow-hidden text-center text-white">
-            {/* Contenedor para la Imagen de Fondo y Superposición */}
             <div className="absolute inset-0 z-0">
-                {/* Skeleton de carga inicial */}
-                {isLoadingImage && <Skeleton className="h-full w-full" />}
+                {/* Skeleton de carga inicial. Desaparece cuando la PRIMERA imagen ha cargado */}
+                {isLoading && <Skeleton className="h-full w-full" />}
 
-                {/* AnimatePresence para gestionar la transición de las imágenes */}
                 <AnimatePresence initial={false}>
                     <motion.div
-                        key={currentImageIndex} // La 'key' es crucial para que AnimatePresence detecte el cambio
+                        key={currentImageIndex}
                         className="absolute inset-0"
                         variants={imageVariants}
                         initial="initial"
@@ -96,14 +96,15 @@ export default function Hero() {
                             alt="Paisaje inspirador de fondo para la sección principal"
                             fill
                             quality={85}
-                            priority={true} // Prioriza la carga de la imagen visible
-                            onLoad={handleImageLoad} // Usamos onLoad en lugar de onLoadingComplete
+                            // `priority` es clave para la primera imagen (LCP)
+                            priority={true}
+                            // 'onLoad' se usa para detectar cuándo la imagen ha terminado de cargar
+                            onLoad={handleImageLoad}
                             className="object-cover"
                         />
                     </motion.div>
                 </AnimatePresence>
 
-                {/* Superposición con degradado para mejor contraste */}
                 <motion.div
                     className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/75 dark:from-black/60 dark:via-black/70 dark:to-black/80"
                     initial={{ opacity: 0 }}
@@ -111,17 +112,18 @@ export default function Hero() {
                 />
             </div>
 
-            {/* Contenido Principal del Hero (sin cambios en esta parte) */}
+            {/* Contenido Principal del Hero */}
             <motion.div
                 className="relative z-10 mx-auto flex max-w-2xl lg:max-w-3xl flex-col items-center p-4 sm:p-6 md:p-8"
                 initial="hidden"
-                animate="visible"
+                // --- ¡CAMBIO! La animación solo se activa cuando isLoading es false ---
+                animate={!isLoading ? 'visible' : 'hidden'}
                 variants={{
                     hidden: {},
                     visible: { transition: { staggerChildren: 0.2 } },
                 }}
             >
-                {/* ... resto del contenido (h1, p, Button) ... */}
+                {/* ... resto del contenido sin cambios ... */}
                 <motion.h1
                     className="mb-4 text-4xl font-bold leading-tight sm:text-5xl md:mb-6 md:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200"
                     variants={fadeInUp}
@@ -138,7 +140,6 @@ export default function Hero() {
                     Explora destinos increíbles, encuentra ofertas exclusivas y planifica el viaje de tus sueños con
                     nosotros. La aventura te espera.
                 </motion.p>
-
                 <motion.div
                     className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row"
                     variants={fadeInUp}

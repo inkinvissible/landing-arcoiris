@@ -121,14 +121,14 @@ export default function About() {
                         variants={itemVariants}
                         className="w-full lg:w-2/5 relative"
                     >
-                        <div className="relative w-full h-[450px] rounded-xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
                             <Image
                                 src="/images/sobre-nosotros.png"
                                 alt="Nuestra Empresa"
-                                fill
-                                className="bg-white dark:bg-gray-800 object-cover"
+                                width={500}
+                                height={500}
+                                className="bg-white dark:bg-gray-800 relative w-full h-[450px] rounded-xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500"
                             />
-                        </div>
+
 
                     </motion.div>
 
