@@ -17,6 +17,7 @@ export const ofertasQuery = `
   "imageUrl": image.asset->url,
   altText,
   href,
-  lastMinute
+  lastMinute,
+  validUntil,
 }
 `

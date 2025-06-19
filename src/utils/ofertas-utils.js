@@ -15,7 +15,7 @@ export const sideStories = [
         description: 'Sumérgete en la vibrante cultura de Tokio, desde templos serenos hasta rascacielos futuristas.',
         altText: 'Calles de Tokio por la noche',
         href: '/articles/guia-tokio-72-horas',
-    },
+        validUntil: '2024-12-31'},
     {
         id: 'side-story-2',
         imageUrl: '/images/ofertas/new-york.jpg',

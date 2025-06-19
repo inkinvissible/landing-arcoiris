@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import CountdownTimer from './CountdownTimer';
 
 export default function ArticleItem({
                                         imageUrl,
@@ -10,6 +11,8 @@ export default function ArticleItem({
                                         altText,
                                         href = '#',
                                         isFeatured = false,
+                                        lastMinute = false,
+                                        validUntil = null,
                                     }) {
     return (
         <div className={`block ${isFeatured ? 'w-full' : 'w-full'}`}>
@@ -19,10 +22,7 @@ export default function ArticleItem({
                     bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-md dark:shadow-neutral-700/20
                     hover:shadow-xl dark:hover:shadow-lg dark:hover:shadow-neutral-600/30
                     transition-all duration-500 overflow-hidden group
-                    ${isFeatured
-                    ? ''
-                    : 'md:flex-row md:h-40 lg:h-36 xl:h-48'
-                }
+                    ${isFeatured ? '' : 'md:flex-row md:h-40 lg:h-36 xl:h-48'}
                 `}
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -32,7 +32,7 @@ export default function ArticleItem({
 
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-indigo-500 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
 
-                {/* Contenedor principal (para elevarlo por encima del borde) */}
+                {/* Contenedor principal */}
                 <div className={`
                     relative z-10 flex flex-col flex-1 bg-white dark:bg-gray-800 rounded-xl overflow-hidden
                     ${isFeatured ? '' : 'md:flex-row md:h-40 lg:h-36 xl:h-48'}
@@ -40,10 +40,7 @@ export default function ArticleItem({
                     {/* Contenedor de la Imagen */}
                     <div className={`
                         relative shrink-0 overflow-hidden
-                        ${isFeatured
-                        ? 'w-full h-60 flex-1 min-h-115'
-                        : 'w-full h-48 md:w-2/5 md:h-full'
-                    }
+                        ${isFeatured ? 'w-full h-60 flex-1 min-h-115' : 'w-full h-48 md:w-2/5 md:h-full'}
                     `}>
                         <Image
                             src={imageUrl}
@@ -55,20 +52,25 @@ export default function ArticleItem({
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                        {isFeatured && (
-                            <div className="absolute top-4 left-4 bg-purple-500/90 text-white text-xs uppercase tracking-wider py-1 px-2 rounded-md backdrop-blur-sm">
-                                Destacado
-                            </div>
-                        )}
+                        {/* Indicadores (Destacado o Última Hora) */}
+                        <div className="absolute top-4 left-4 flex flex-col gap-2">
+                            {isFeatured && (
+                                <div className="bg-purple-500/90 text-white text-xs uppercase tracking-wider py-1 px-2 rounded-md backdrop-blur-sm">
+                                    Destacado
+                                </div>
+                            )}
+                            {lastMinute && (
+                                <div className="bg-red-500/90 text-white text-xs uppercase tracking-wider py-1 px-2 rounded-md backdrop-blur-sm animate-pulse">
+                                    Última Hora
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Contenedor del Contenido */}
                     <div className={`
                         p-5 flex flex-col relative
-                        ${isFeatured
-                        ? 'flex-1 justify-start pt-5 md:pt-6'
-                        : 'md:w-3/5 justify-center'
-                    }
+                        ${isFeatured ? 'flex-1 justify-start pt-5 md:pt-6' : 'md:w-3/5 justify-center'}
                     `}>
                         <div className="w-8 h-0.5 bg-gradient-to-r from-purple-500 to-indigo-500 mb-3 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
 
@@ -87,6 +89,21 @@ export default function ArticleItem({
                             {description}
                         </p>
 
+                        {/* Temporizador de oferta */}
+                        {validUntil && (
+                            <CountdownTimer validUntil={validUntil} />
+                        )}
+
+                        {/* Botón de acción */}
+                        <div className="mt-auto pt-2">
+                            <a
+                                href={href}
+                                className="inline-flex items-center text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors"
+                            >
+                                Ver oferta
+                                <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </motion.div>

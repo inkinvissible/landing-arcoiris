@@ -10,12 +10,17 @@ import Footer from "@/components/Footer";
 import {client} from "@/lib/sanity";
 import {novedadesQuery} from "@/lib/queries";
 import {mapSanityNovedades} from "@/utils/transformNovedades";
-
+import {ofertasQuery} from "@/lib/queries";
+import {mapSanityOfertas} from "@/utils/transformOfertas";
 
 
 export default async function Home() {
     const rawNovedades = await client.fetch(novedadesQuery);
     const novedadesData = mapSanityNovedades(rawNovedades);
+
+    const rawOfertas = await client.fetch(ofertasQuery);
+    const ofertasData = mapSanityOfertas(rawOfertas);
+
     return (
         <>
             <Hero/>
@@ -31,8 +36,7 @@ export default async function Home() {
             <div id="ofertas">
                 <FeaturedArticlesSection
                     sectionTitle="Nuestras ofertas destacadas"
-                    mainArticle={mainStory}
-                    sideArticles={sideStories}
+                    cardsData={ofertasData}
                 />
             </div>
 

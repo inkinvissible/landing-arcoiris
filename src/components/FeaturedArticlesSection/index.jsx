@@ -1,17 +1,19 @@
-// src/components/FeaturedArticlesSection.jsx
-import ArticleItem from './ArticleItem'; // Asegúrate que la ruta sea correcta
+// src/components/FeaturedArticlesSection/index.jsx
+import ArticleItem from './ArticleItem';
 
 export default function FeaturedArticlesSection({
                                                     sectionTitle,
-                                                    mainArticle, // Objeto: { id, imageUrl, title, description, altText, href }
-                                                    sideArticles = [], // Array de 3 objetos de artículo
+                                                    cardsData
                                                 }) {
-    // Es buena idea verificar que los datos necesarios estén presentes
-    if (!mainArticle || !sideArticles || sideArticles.length < 3) {
-        // En un caso real, podrías renderizar un placeholder o un mensaje de error
-        console.warn("FeaturedArticlesSection requiere 'mainArticle' y un array 'sideArticles' con al menos 3 elementos.");
+    // Verificamos que existan datos
+    if (!cardsData || cardsData.length === 0) {
+        console.warn("FeaturedArticlesSection requiere un array 'cardsData' con al menos un elemento.");
         return null;
     }
+
+    // Dividimos los datos: el primero será el principal y el resto secundarios
+    const mainArticle = cardsData[0];
+    const sideArticles = cardsData.slice(1);
 
     return (
         <section className="py-12 md:py-16 lg:py-20 bg-[#392761] dark:bg-[#392761]dark:bg-gray-900">
@@ -23,11 +25,11 @@ export default function FeaturedArticlesSection({
                 )}
 
                 <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch min-h-[400px]">
-                    {/* Featured */}
+                    {/* Oferta destacada */}
                     <div className="md:w-1/2 w-full h-full flex">
                         <ArticleItem {...mainArticle} isFeatured={true} />
                     </div>
-                    {/* Secundarios */}
+                    {/* Ofertas secundarias */}
                     <div className="md:w-1/2 w-full flex flex-col gap-4 md:gap-6 h-full">
                         {sideArticles.slice(0, 3).map((article, idx) => (
                             <div key={article.id || idx} className="h-full flex flex-1">
