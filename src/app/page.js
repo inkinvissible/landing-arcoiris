@@ -48,6 +48,7 @@ export default async function Home() {
                     cardsData={novedadesData}
                     cardsToShow={4}
                     buttonText={"Quiero consultar"}
+                    showButtons={true}
                 />
             </div>
             <div id="sobre-nosotros">

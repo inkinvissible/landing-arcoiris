@@ -1,8 +1,22 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import {createWhatsappLink} from "@/utils/whatsappShare";
 
-export default function Card({ imageUrl, title, description, altText }) {
+export default function Card({ imageUrl, title, description, altText, showButton }) {
+
+    const handleWhatsappLink = (e) => {
+        e.preventDefault();
+        const whatsappLink = createWhatsappLink({
+            phone: "5493541227947",
+            title,
+            description,
+            type: "novedad"
+        });
+        window.open(whatsappLink.url, '_blank', 'noopener,noreferrer');
+
+    }
+
     return (
         <motion.div
             className="flex-shrink-0 w-64 md:w-72 lg:w-80 rounded-xl overflow-hidden group relative"
@@ -53,6 +67,17 @@ export default function Card({ imageUrl, title, description, altText }) {
                     <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 leading-relaxed">
                         {description}
                     </p>
+                    {showButton && (
+                        <motion.button
+                            onClick={handleWhatsappLink}
+                            className="cursor-pointer inline-flex items-center text-purple-600 dark:text-purple-400 hover:underline font-medium text-sm"
+                            whileHover={{ scale: 1.05 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            Consultar
+                            <ArrowRight className="ml-1 h-4 w-4" />
+                        </motion.button>
+                    )}
 
 
                 </motion.div>

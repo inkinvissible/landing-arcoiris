@@ -12,7 +12,8 @@ export default function ScrollableCardSection({
                                                   sectionSubtitle,
                                                   cardsData = [],
                                                   cardsToShow = 4,
-                                                  buttonText
+                                                  buttonText,
+                                                  showButtons = false
                                               }) {
     const scrollContainerRef = useRef(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -96,6 +97,7 @@ export default function ScrollableCardSection({
                                 title={card.title}
                                 description={card.description}
                                 altText={card.altText}
+                                showButton={showButtons}
                             />
                         ))}
                     </div>
