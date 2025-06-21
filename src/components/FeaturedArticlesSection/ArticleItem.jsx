@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import CountdownTimer from './CountdownTimer';
+import {createWhatsappLink} from "@/utils/whatsappShare";
 
 export default function ArticleItem({
                                         imageUrl,
@@ -14,6 +15,19 @@ export default function ArticleItem({
                                         lastMinute = false,
                                         validUntil = null,
                                     }) {
+
+    function handleWhatsAppShare(e) {
+        e.preventDefault();
+        const whatsappData = createWhatsappLink({
+            title,
+            description,
+            validUntil,
+            type: "oferta"
+        });
+
+        whatsappData.openWhatsapp();
+    }
+
     return (
         <div className={`block ${isFeatured ? 'w-full' : 'w-full'}`}>
             <motion.div
@@ -96,13 +110,13 @@ export default function ArticleItem({
 
                         {/* Botón de acción */}
                         <div className="mt-auto pt-2">
-                            <a
-                                href={href}
-                                className="inline-flex items-center text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors"
+                            <button
+                                onClick={handleWhatsAppShare}
+                                className="inline-flex items-center text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors cursor-pointer"
                             >
-                                Ver oferta
+                                Consultar oferta
                                 <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
