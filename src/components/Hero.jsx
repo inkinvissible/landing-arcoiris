@@ -18,32 +18,40 @@ const heroImageUrls = [
 
 export default function Hero() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [isLoading, setIsLoading] = useState(true); // Un único estado de carga para la imagen inicial
+    const [isLoading, setIsLoading] = useState(true);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
     const { scrollToElement } = useSmoothScroll();
 
-    // Efecto para el cambio automático de imágenes
     useEffect(() => {
         const randomIndex = Math.floor(Math.random() * heroImageUrls.length);
         setCurrentImageIndex(randomIndex);
-
-        const interval = setInterval(() => {
-            setCurrentImageIndex(prevIndex => (prevIndex + 1) % heroImageUrls.length);
-        }, 8000);
-
-        return () => clearInterval(interval);
     }, []);
 
-    // --- ¡NUEVO! Efecto para precargar la siguiente imagen ---
     useEffect(() => {
-        if (heroImageUrls.length > 1) {
+        if (!isLoading) {
+            const timeout = setTimeout(() => {
+                setIsInitialLoad(false);
+
+                const interval = setInterval(() => {
+                    setCurrentImageIndex(prevIndex => (prevIndex + 1) % heroImageUrls.length);
+                }, 8000);
+
+                return () => clearInterval(interval);
+            }, 8000);
+
+            return () => clearTimeout(timeout);
+        }
+    }, [isLoading]);
+
+    useEffect(() => {
+        if (heroImageUrls.length > 1 && !isInitialLoad) {
             const nextIndex = (currentImageIndex + 1) % heroImageUrls.length;
             const nextImageUrl = heroImageUrls[nextIndex];
 
-            // Se crea una instancia de Image en memoria para forzar la descarga
             const img = new window.Image();
             img.src = nextImageUrl;
         }
-    }, [currentImageIndex]); // Se ejecuta cada vez que la imagen actual cambia
+    }, [currentImageIndex, isInitialLoad]);
 
     const handleImageLoad = () => {
         setIsLoading(false);
@@ -78,10 +86,12 @@ export default function Hero() {
 
     return (
         <section className="relative flex min-h-screen items-center justify-center overflow-hidden text-center text-white">
-            <div className="absolute inset-0 z-0">
-                {/* Skeleton de carga inicial. Desaparece cuando la PRIMERA imagen ha cargado */}
+            {/* Contenedor de la imagen y el overlay */}
+            <div className="absolute inset-0 z-0 bg-black"> {/* Añadido bg-black como fallback */}
                 {isLoading && <Skeleton className="h-full w-full" />}
 
+                {/* --- ¡ARREGLO PRINCIPAL! Se ha quitado `mode="wait"` --- */}
+                {/* Esto permite que la nueva imagen entre MIENTRAS la vieja sale (cross-fade) */}
                 <AnimatePresence initial={false}>
                     <motion.div
                         key={currentImageIndex}
@@ -96,15 +106,14 @@ export default function Hero() {
                             alt="Paisaje inspirador de fondo para la sección principal"
                             fill
                             quality={85}
-                            // `priority` es clave para la primera imagen (LCP)
                             priority={true}
-                            // 'onLoad' se usa para detectar cuándo la imagen ha terminado de cargar
                             onLoad={handleImageLoad}
                             className="object-cover"
                         />
                     </motion.div>
                 </AnimatePresence>
 
+                {/* Overlay oscuro */}
                 <motion.div
                     className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/75 dark:from-black/60 dark:via-black/70 dark:to-black/80"
                     initial={{ opacity: 0 }}
@@ -116,14 +125,12 @@ export default function Hero() {
             <motion.div
                 className="relative z-10 mx-auto flex max-w-2xl lg:max-w-3xl flex-col items-center p-4 sm:p-6 md:p-8"
                 initial="hidden"
-                // --- ¡CAMBIO! La animación solo se activa cuando isLoading es false ---
                 animate={!isLoading ? 'visible' : 'hidden'}
                 variants={{
                     hidden: {},
                     visible: { transition: { staggerChildren: 0.2 } },
                 }}
             >
-                {/* ... resto del contenido sin cambios ... */}
                 <motion.h1
                     className="mb-4 text-4xl font-bold leading-tight sm:text-5xl md:mb-6 md:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200"
                     variants={fadeInUp}
@@ -149,35 +156,24 @@ export default function Hero() {
                         asChild
                         size="lg"
                         variant="glass"
-                        className="w-full sm:w-auto relative group overflow-hidden"
+                        className="group border-none bg-white/20 backdrop-blur-md hover:bg-white/30"
+                        onClick={() => scrollToElement('explorar')}
                     >
-                        <Link href="https://wa.me/5493541227947" target="_blank">
-                            <span className="relative z-10">Contacto</span>
-                            <motion.span
-                                className="absolute inset-0 bg-white/20 rounded-md"
-                                initial={{x: "-100%"}}
-                                whileHover={{x: 0}}
-                                transition={{duration: 0.3, ease: "easeOut"}}
-                            />
+                        <Link href="#explorar">
+                            Explorar destinos{' '}
+                            <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
                         </Link>
                     </Button>
-
                     <Button
                         asChild
-                        variant="glass"
                         size="lg"
-                        className="w-full sm:w-auto relative group overflow-hidden"
+                        variant="glass"
+                        className="group border-none bg-white/10 backdrop-blur-md hover:bg-white/20"
+                        onClick={() => scrollToElement('contact')}
                     >
-                        <Link href="#ofertas"
-                              onClick={(e) => scrollToElement(e, '#ofertas')}
-                        >
-                            <span className="relative z-10">Nuestras Ofertas</span>
-                            <motion.span
-                                className="absolute inset-0 bg-white/20 rounded-md"
-                                initial={{x: "-100%"}}
-                                whileHover={{x: 0}}
-                                transition={{duration: 0.3, ease: "easeOut"}}
-                            />
+                        <Link href="#contact">
+                            Contáctanos{' '}
+                            <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
                         </Link>
                     </Button>
                 </motion.div>
