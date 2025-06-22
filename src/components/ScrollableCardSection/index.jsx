@@ -57,7 +57,7 @@ export default function ScrollableCardSection({
     const showNavigation = cardsData.length > cardsToShow;
 
     return (
-        <section className="py-12 md:py-16 lg:py-20 bg-gray-50 dark:bg-gray-900">
+        <section className="py-12 md:py-16 lg:py-20 bg-gray-50  dark:bg-gray-900 ">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mb-8 md:mb-10 text-center">
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
@@ -120,7 +120,7 @@ export default function ScrollableCardSection({
 
             </div>
             <div className="flex justify-center md:mt-4">
-                <Button className="text-xl transition-all duration-300">
+                <Button className="text-xl transition-all duration-400 p-6 dark:text-white text-white dark:hover:text-black dark:hover:bg-white/10 bg-gradient-to-r from-[#6645AF] to-[#5038A0] hover:from-[#7655BF] hover:to-[#6148B0] shadow-lg shadow-purple-500/20 dark:shadow-purple-900/30 rounded-xl">
                     <Link href="https://wa.me/5493541227947" className="cursor-pointer">
                         {buttonText}
                     </Link>

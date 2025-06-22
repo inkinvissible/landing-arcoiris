@@ -24,7 +24,7 @@ export default async function Home() {
     return (
         <>
             <Hero/>
-            <div id="destino">
+            <div id="destino" className="dark">
                 <ScrollableCardSection
                     sectionTitle="Destinos Recomendados"
                     sectionSubtitle="Explora lugares increíbles que hemos seleccionado para ti."
@@ -40,8 +40,8 @@ export default async function Home() {
                 />
             </div>
 
-            <Callout/>
-            <div id="novedades">
+            <Callout />
+            <div id="novedades" className="dark">
                 <ScrollableCardSection
                     sectionTitle="Nuestras novedades"
                     sectionSubtitle="Descubre las últimas noticias y actualizaciones de nuestros destinos."
@@ -51,10 +51,10 @@ export default async function Home() {
                     showButtons={true}
                 />
             </div>
-            <div id="sobre-nosotros">
+            <div id="sobre-nosotros" className="dark">
                 <About/>
             </div>
-            <div id="galeria">
+            <div id="galeria" className="dark">
                 <Gallery/>
             </div>
             <Footer/>

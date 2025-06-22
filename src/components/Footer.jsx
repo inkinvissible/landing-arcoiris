@@ -30,7 +30,7 @@ export default function Footer() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={footerVariants}
-            className="bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 pt-16 pb-8"
+            className=" bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 pt-16 pb-8"
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Footer principal con logo y columnas */}
