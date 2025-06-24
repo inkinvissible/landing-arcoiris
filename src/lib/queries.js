@@ -3,6 +3,7 @@ export const novedadesQuery = `
   _id,
   title,
   description,
+  descriptionLong,
   "imageUrl": image.asset->url,
   altText,
   _createdAt,

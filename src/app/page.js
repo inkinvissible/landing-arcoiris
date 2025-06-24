@@ -2,7 +2,6 @@ import Hero from "@/components/Hero"
 import ScrollableCardSection from "@/components/ScrollableCardSection";
 import {recommendedDestinations} from "@/utils/destinations-utils";
 import FeaturedArticlesSection from "@/components/FeaturedArticlesSection";
-import {mainStory, sideStories} from "@/utils/ofertas-utils";
 import Callout from "@/components/Callout";
 import About from "@/components/About";
 import Gallery from "@/components/Gallery";
@@ -17,7 +16,6 @@ import {mapSanityOfertas} from "@/utils/transformOfertas";
 export default async function Home() {
     const rawNovedades = await client.fetch(novedadesQuery);
     const novedadesData = mapSanityNovedades(rawNovedades);
-
     const rawOfertas = await client.fetch(ofertasQuery);
     const ofertasData = mapSanityOfertas(rawOfertas);
 
@@ -46,7 +44,7 @@ export default async function Home() {
                     sectionTitle="Nuestras novedades"
                     sectionSubtitle="Descubre las últimas noticias y actualizaciones de nuestros destinos."
                     cardsData={novedadesData}
-                    cardsToShow={4}
+                    cardsToShow={novedadesData.length - 1}
                     buttonText={"Quiero consultar"}
                     showButtons={true}
                 />

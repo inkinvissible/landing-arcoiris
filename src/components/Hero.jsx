@@ -85,7 +85,7 @@ export default function Hero() {
     };
 
     return (
-        <section className="relative flex min-h-screen items-center justify-center overflow-hidden text-center text-white">
+        <section id="inicio" className="relative flex min-h-screen items-center justify-center overflow-hidden text-center text-white">
             {/* Contenedor de la imagen y el overlay */}
             <div className="absolute inset-0 z-0 bg-black"> {/* Añadido bg-black como fallback */}
                 {isLoading && <Skeleton className="h-full w-full" />}
@@ -157,9 +157,11 @@ export default function Hero() {
                         size="lg"
                         variant="glass"
                         className="group border-none bg-white/20 backdrop-blur-md hover:bg-white/30"
-                        onClick={() => scrollToElement('explorar')}
                     >
-                        <Link href="#explorar">
+                        <Link
+                            href="#destino"
+                            onClick={(e) => scrollToElement(e, '#destino')}
+                        >
                             Explorar destinos{' '}
                             <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
                         </Link>
@@ -169,9 +171,8 @@ export default function Hero() {
                         size="lg"
                         variant="glass"
                         className="group border-none bg-white/10 backdrop-blur-md hover:bg-white/20"
-                        onClick={() => scrollToElement('contact')}
                     >
-                        <Link href="#contact">
+                        <Link href="https://wa.me/5493541227947" target="_blank">
                             Contáctanos{' '}
                             <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
                         </Link>

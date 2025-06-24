@@ -96,6 +96,7 @@ export default function ScrollableCardSection({
                                 imageUrl={card.imageUrl}
                                 title={card.title}
                                 description={card.description}
+                                descriptionLong={card.descriptionLong}
                                 altText={card.altText}
                                 showButton={showButtons}
                             />

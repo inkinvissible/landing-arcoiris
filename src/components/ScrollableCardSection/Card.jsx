@@ -1,12 +1,23 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import {createWhatsappLink} from "@/utils/whatsappShare";
+import { ArrowRight, X } from 'lucide-react';
+import { useState } from 'react';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { createWhatsappLink } from "@/utils/whatsappShare";
 
-export default function Card({ imageUrl, title, description, altText, showButton }) {
+export default function Card({ imageUrl, title, description, descriptionLong ,altText, showButton }) {
+    const [dialogOpen, setDialogOpen] = useState(false);
 
-    const handleWhatsappLink = (e) => {
-        e.preventDefault();
+    const handleWhatsappLink = () => {
         const whatsappLink = createWhatsappLink({
             phone: "5493541227947",
             title,
@@ -14,8 +25,7 @@ export default function Card({ imageUrl, title, description, altText, showButton
             type: "novedad"
         });
         window.open(whatsappLink.url, '_blank', 'noopener,noreferrer');
-
-    }
+    };
 
     return (
         <motion.div
@@ -69,19 +79,77 @@ export default function Card({ imageUrl, title, description, altText, showButton
                     </p>
                     {showButton && (
                         <motion.button
-                            onClick={handleWhatsappLink}
+                            onClick={() => setDialogOpen(true)}
                             className="cursor-pointer inline-flex items-center text-purple-600 dark:text-purple-400 hover:underline font-medium text-sm"
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.2 }}
                         >
-                            Consultar
+                            Ver detalles
                             <ArrowRight className="ml-1 h-4 w-4" />
                         </motion.button>
                     )}
-
-
                 </motion.div>
             </div>
+
+            {/* AlertDialog para mostrar detalles */}
+            <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <AlertDialogContent className="max-w-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-0 overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[85vh]">
+                    {/* Imagen y título */}
+                    <div className="relative h-48 w-full">
+                        <Image
+                            src={imageUrl}
+                            alt={title}
+                            fill
+                            className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end">
+                            <div className="p-6">
+                                <h2 className="text-white text-2xl font-bold">{title}</h2>
+                            </div>
+                        </div>
+                        {/* Botón de cierre visible y accesible */}
+                        <button
+                            onClick={() => setDialogOpen(false)}
+                            className="absolute top-2 right-2 p-2 rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors"
+                        >
+                            <X className="h-5 w-5" />
+                        </button>
+                    </div>
+
+                    <div className="flex flex-col overflow-hidden h-full">
+                        <AlertDialogHeader className="p-6 pt-4 flex-grow overflow-hidden flex flex-col">
+                            <AlertDialogTitle className="text-xl text-gray-900 dark:text-white mb-4">
+                                Detalles del viaje
+                            </AlertDialogTitle>
+
+                            {/* Contenedor scrolleable para la descripción en todos los dispositivos */}
+                            <div className="overflow-y-auto flex-grow pr-2 custom-scrollbar">
+                                <AlertDialogDescription className="text-gray-700 dark:text-gray-300 whitespace-pre-line">
+                                    {descriptionLong}
+                                </AlertDialogDescription>
+                            </div>
+                        </AlertDialogHeader>
+                    </div>
+
+                    <AlertDialogFooter className="p-6 pt-4 mt-auto border-t border-gray-200 dark:border-gray-700">
+                        <AlertDialogAction asChild>
+                            <Button variant="outline" onClick={() => setDialogOpen(false)}>
+                                Cerrar
+                            </Button>
+                        </AlertDialogAction>
+
+                        <Button
+                            className="bg-gradient-to-r from-[#6645AF] to-[#5038A0] hover:from-[#7655BF] hover:to-[#6148B0] text-white"
+                            onClick={() => {
+                                setDialogOpen(false);
+                                handleWhatsappLink();
+                            }}
+                        >
+                            Consultar disponibilidad
+                        </Button>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </motion.div>
     );
 }

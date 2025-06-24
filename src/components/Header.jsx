@@ -8,7 +8,7 @@ import Image from 'next/image';
 import useSmoothScroll from '@/hooks/useSmoothScroll';
 
 const navLinks = [
-    { href: '/', label: 'Inicio' },
+    { href: '#inicio', label: 'Inicio' },
     { href: '#destino', label: 'Destino' },
     { href: '#galeria', label: 'Galería' },
     { href: '#sobre-nosotros', label: 'Sobre Nosotros' },
