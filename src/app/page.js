@@ -27,7 +27,7 @@ export default async function Home() {
                     sectionTitle="Destinos Recomendados"
                     sectionSubtitle="Explora lugares increíbles que hemos seleccionado para ti."
                     cardsData={recommendedDestinations}
-                    cardsToShow={4}
+                    cardsToShow={3}
                     buttonText={"Creá tu viaje"}
                 />
             </div>
@@ -44,7 +44,7 @@ export default async function Home() {
                     sectionTitle="Nuestras novedades"
                     sectionSubtitle="Descubre las últimas noticias y actualizaciones de nuestros destinos."
                     cardsData={novedadesData}
-                    cardsToShow={novedadesData.length - 1}
+                    cardsToShow={3}
                     buttonText={"Quiero consultar"}
                     showButtons={true}
                 />
