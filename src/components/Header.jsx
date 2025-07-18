@@ -56,10 +56,10 @@ export default function Header() {
                         <Image
                             src={logoSrc}
                             alt="Logo de Arcoiris Viajes"
-                            width={190}
+                            width={100}
                             height={60}
                             priority
-                            className="h-auto w-auto"
+                            className="w-80"
                         />
                     </Link>
 
